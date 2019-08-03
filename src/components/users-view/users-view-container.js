@@ -7,7 +7,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return { fetchUsers: () => dispatch(fetchUsers({id:1, name: 'name'}))};
+  return { fetchUsers: () => dispatch(fetchUsers())};
 };
 
 const UsersViewRedux = connect(
