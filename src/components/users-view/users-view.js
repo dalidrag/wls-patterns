@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import UsersGallery from './users-gallery';
 import UserTile from './user-tile';
 import './user-tile.scss';
 
@@ -16,7 +17,7 @@ class UsersView extends React.Component {
     render() {
         let users = this.props.users && this.props.users.data;
 
-        return <div>
+        return <UsersGallery>
             {users && users.map(user => {
                 return <UserTile
                     key={user.id}
@@ -26,7 +27,7 @@ class UsersView extends React.Component {
                 />;
             })
             }
-        </div>
+        </UsersGallery>
     }
 }
 
