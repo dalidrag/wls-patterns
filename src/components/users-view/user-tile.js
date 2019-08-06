@@ -1,73 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+    withPopover,
+    withPopoverPropTypes,
+    withPopoverDefaultProps,
+} from '../directory-display/popover/with-popover';
 
+@withPopover
 class UserTile extends React.Component {
     static propTypes = {
         firstName: PropTypes.string.isRequired,
         lastName: PropTypes.string.isRequired,
         imgSrc: PropTypes.string.isRequired,
         email: PropTypes.string.isRequired,
+        ...withPopoverPropTypes
     };
 
-    state = {
-        isDisplayed: false,
-        top: 0,
-        left: 0
+    static defaultProps = {
+        ...withPopoverDefaultProps
     };
-
-    componentDidMount() {
-        const {top, left} = this.getPopoverPosition();
-        this.setState({top, left});
-    }
-
-    imgRef = React.createRef();
 
     onMouseEnter = () => {
-        this.setState({
-            isDisplayed: true,
-        });
+        this.props.togglePopover(true, this.props.email);
     };
 
     onMouseLeave = () => {
-        this.setState({
-            isDisplayed: false,
-        });
-    };
-
-    getPopoverPosition = () => {
-        const elementNode = this.imgRef.current;
-
-        const elementRect = elementNode.getBoundingClientRect();
-
-        const top = elementRect.top;
-        const left = elementRect.left;
-
-        return {top, left};
+        this.props.togglePopover(false);
     };
 
     render() {
-        const popoverStyle = {
-            display: this.state.isDisplayed ? 'block' : 'none',
-            top: this.state.top,
-            left: this.state.left
-        };
-
         return <div className={'wls-p-user-tile'}>
             <img
                 src={this.props.imgSrc}
                 alt={"User Image"}
-                ref={this.imgRef}
+                ref={this.props.popoverCallerRef}
                 onMouseEnter={this.onMouseEnter}
                 onMouseLeave={this.onMouseLeave}
             />
             <div>
                 {`${this.props.firstName} ${this.props.lastName}`}
-            </div>
-            <div
-                className='wls-p-popover'
-                style={popoverStyle}
-            >
-                {this.props.email}
             </div>
         </div>
     }
