@@ -24,6 +24,7 @@ class UsersView extends React.Component {
                     imgSrc={user.avatar}
                     firstName={user.first_name}
                     lastName={user.last_name}
+                    email={user.email}
                 />;
             })
             }
