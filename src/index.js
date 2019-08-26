@@ -5,11 +5,13 @@ import './index.css';
 // import * as serviceWorker from './serviceWorker';
 import store from './redux/store';
 import UsersViewRedux from './components/users-view/users-view-container';
+import Header from './components/Header';
 import PopoverProvider from './components/directory-display/popover/popover-provider';
 
 render(
     <Provider store={store}>
         <PopoverProvider>
+            <Header/>
             <UsersViewRedux />
         </PopoverProvider>
     </Provider>, document.getElementById('root')); // eslint-disable-line
