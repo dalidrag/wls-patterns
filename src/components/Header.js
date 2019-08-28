@@ -21,12 +21,19 @@ class Header extends React.Component {
         this.setState({isSideMenuOpened: !this.state.isSideMenuOpened});
     };
 
+    onClickOutsideMenu = () => {
+        this.props.closeOverlay();
+        this.setState({
+            isSideMenuOpened: false,
+        });
+    };
+
     render() {
         return (<div className="c-header">
             <button className="c-burger-button" onClick={this.toggleMenu}>
                 <img src="/images/burger.svg" alt="burger-icon" />
             </button>
-            <SideMenu isOpened={this.state.isSideMenuOpened}/>
+            <SideMenu isOpened={this.state.isSideMenuOpened} onClickOutside={this.onClickOutsideMenu}/>
             <TopMenu />
         </div>)
     }
