@@ -7,13 +7,16 @@ import store from './redux/store';
 import UsersViewRedux from './components/users-view/users-view-container';
 import Header from './components/Header';
 import PopoverProvider from './components/directory-display/popover/popover-provider';
+import OverlayProvider from "./components/directory-display/overlay/OverlayProvider";
 
 render(
     <Provider store={store}>
-        <PopoverProvider>
-            <Header/>
-            <UsersViewRedux />
-        </PopoverProvider>
+        <OverlayProvider>
+            <PopoverProvider>
+                <Header/>
+                <UsersViewRedux />
+            </PopoverProvider>
+        </OverlayProvider>
     </Provider>, document.getElementById('root')); // eslint-disable-line
 
 // If you want your app to work offline and load faster, you can change

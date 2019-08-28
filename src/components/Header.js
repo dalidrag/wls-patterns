@@ -1,15 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TopMenu from './navigation/TopMenu';
 import SideMenu from './navigation/SideMenu';
 import './Header.scss';
+import {withOverlay} from "./directory-display/overlay/withOverlay";
 
+@withOverlay
 class Header extends React.Component {
+    static propTypes = {
+        openOverlay: PropTypes.func,
+        closeOverlay: PropTypes.func
+    };
+
     state = {
         isSideMenuOpened: false
     };
 
     toggleMenu = () => {
-        this.setState({isSideMenuOpened: !this.state.isSideMenuOpened})
+        !this.state.isSideMenuOpened ? this.props.openOverlay() : this.props.closeOverlay();
+        this.setState({isSideMenuOpened: !this.state.isSideMenuOpened});
     };
 
     render() {
