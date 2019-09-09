@@ -1,0 +1,77 @@
+// Sets map value at given key
+@function map-set($map, $key, $value) {
+  $new: ($key: $value);
+
+  @return map-merge($map, $new);
+}
+
+// Extends map with replacement map
+@function map-extend($map-old, $map-new, $overwrite: true) {
+  @each $key, $new-value in $map-new {
+    @if map-has-key($map-old, $key) {
+      $old-value: map-get($map-old, $key);
+
+      @if type-of($new-value) == map and type-of($old-value) == map {
+        $merged-value: map-extend($old-value, $new-value);
+        $map-old: map-set($map-old, $key, $merged-value);
+      } @else {
+        @if $overwrite {
+          $map-old: map-set($map-old, $key, $new-value);
+        }
+      }
+    } @else {
+      $map-old: map-set($map-old, $key, $new-value);
+    }
+  }
+
+  @return $map-old;
+}
+
+$colors: (
+        primary: #ff5900,
+        primary-darken: #d94c00,
+        primary-30: rgba(255, 89, 000, 0.3),
+        primary-60: rgba(255, 89, 000, 0.6),
+        secondary: #00a3cc,
+        secondary-darken: #0385a6,
+        secondary-30: rgba(000, 163, 204, 0.3),
+        secondary-60: rgba(000, 163, 204, 0.6),
+        background: #333d47,
+        background-dark: #21272e,
+        background-dark2: #1c1f23,
+        background-light: #45525e,
+        background-ultra-light: #f9f9f9,
+        text: #819ab2,
+        text-20: rgba(129, 146, 178, 0.2),
+        text-50: rgba(129, 146, 178, 0.5),
+        shadow: rgba(0, 0, 0, 0.25),
+        text-70: rgba(129, 146, 178, 0.7),
+        text-dark: #0385a6,
+        text-black: #21272e,
+        text-white: #fff,
+        error: #e70026,
+);
+
+/* stylelint-disable-next-line scss/dollar-variable-colon-newline-after */
+$colors: map-extend(
+                $colors,
+                (
+                        primary: #041e42,
+                        background: #1a1a28,
+                        background-2: #2b2c42,
+                        background-light: #ecebf0,
+                        text: #b3b0c5,
+                        text-dark: #2b2c42,
+                        text-search: #ff1a9c,
+                        text-placeholder: #7f798a,
+                )
+);
+
+$z-index: (
+        main: 0,
+        drop-down: 200,
+        navigation: 400,
+        popover: 600,
+        overlay: 800,
+        pop-up: 1000,
+);
