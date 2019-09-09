@@ -10,10 +10,16 @@ class CustomSelect extends Component {
 
     state = {
         isActive: false,
+        selectedLabel: null
     };
 
     toggleDropDown = e => { // eslint-disable-line
         this.setState({isActive: !this.state.isActive})
+    };
+
+    handleOnChange = label => {
+        this.setState({selectedLabel: label, isActive: false});
+        console.log(label); // eslint-disable-line
     };
 
     render() {
@@ -21,8 +27,14 @@ class CustomSelect extends Component {
             label,
             children,
         } = this.props;
-        const options = React.Children.toArray(children);
-        const selectedOption = options[0];
+        const options = React.Children.map(
+            children,
+            (child) => React.cloneElement(child, {
+                onChange: this.handleOnChange,
+                selectedLabel: this.state.selectedLabel,
+            })
+        );
+        const selectedOption = this.state.selectedLabel || options[0].props.label;
 
         return (
             <div
@@ -32,13 +44,13 @@ class CustomSelect extends Component {
                 {label && <label className="vub-c-custom-select__label">{label}</label>}
                 <div className="vub-c-custom-select__field">
                     <span className="vub-c-custom-select__field-value">
-                        {selectedOption && selectedOption.props && selectedOption.props.children}
+                        {selectedOption}
                     </span>
                     <div className="vub-c-custom-select__icon" />
                 </div>
                 {
                     this.state.isActive &&
-                    <ul className="vub-c-custom-select__drop-down" tabIndex="0">
+                    <ul className="vub-c-custom-select__drop-down">
                         {options}
                     </ul>
                 }

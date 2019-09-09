@@ -38,6 +38,7 @@ render(
                         {options.map(option => (
                             <Option
                                 key={option.id}
+                                label={option.name}
                             >
                                 {option.name}
                             </Option>
